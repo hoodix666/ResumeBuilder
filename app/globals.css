@@ -1,0 +1,227 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: light;
+}
+
+.dark {
+  color-scheme: dark;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: #f4f4f5;
+  color: #18181b;
+  font-family:
+    "SF Pro Display",
+    "SF Pro Text",
+    -apple-system,
+    BlinkMacSystemFont,
+    "Inter",
+    "Segoe UI",
+    Roboto,
+    Arial,
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Плавное «перетекание» светлой/тёмной темы: класс вешается на <html> на ~600мс при переключении.
+   Важно: кнопка ползунка темы исключена — иначе её слайд превратился бы в телепорт. */
+html.theme-anim,
+html.theme-anim *,
+html.theme-anim *::before,
+html.theme-anim *::after {
+  transition:
+    background-color 0.5s ease,
+    color 0.5s ease,
+    border-color 0.5s ease,
+    fill 0.5s ease,
+    stroke 0.5s ease !important;
+}
+
+/* Слайд кнопки ползунка и бегунка степпера обязан перетекать даже во время theme-anim */
+html.theme-anim .theme-toggle .theme-toggle-knob {
+  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+html.theme-anim .step-traveler {
+  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+/* Плавная анимация появления шагов */
+@keyframes fadeSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.step-enter {
+  animation: fadeSlideIn 0.35s ease-out both;
+}
+
+/* Анимация иконки темы */
+@keyframes spinSlow {
+  from {
+    transform: rotate(-90deg) scale(0.6);
+    opacity: 0;
+  }
+  to {
+    transform: rotate(0deg) scale(1);
+    opacity: 1;
+  }
+}
+
+.theme-icon-enter {
+  animation: spinSlow 0.45s ease-out both;
+}
+
+/* Искажение кнопки ползунка при перетекании: растягивается и возвращается в круг */
+@keyframes knobSquish {
+  0% {
+    transform: scale(1, 1);
+  }
+  30% {
+    transform: scale(1.5, 0.62);
+  }
+  55% {
+    transform: scale(0.85, 1.15);
+  }
+  75% {
+    transform: scale(1.08, 0.94);
+  }
+  100% {
+    transform: scale(1, 1);
+  }
+}
+
+.knob-squish {
+  animation: knobSquish 0.55s ease-out;
+  transform-origin: center;
+}
+
+/* Мерцание звёздочек в тёмном режиме */
+@keyframes twinkle {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.35;
+  }
+}
+
+.twinkle {
+  animation: twinkle 2.2s ease-in-out infinite;
+}
+
+/* Расходящееся кольцо-капля при активации шага степпера */
+@keyframes liquidRing {
+  0% {
+    transform: scale(0.55);
+    opacity: 0.7;
+  }
+  100% {
+    transform: scale(1.9);
+    opacity: 0;
+  }
+}
+
+.liquid-ring {
+  animation: liquidRing 0.6s ease-out forwards;
+}
+
+/* Лист А4 на экране — облегает контент (без пустой простыни снизу).
+   Фиксированная высота 297мм возвращается только при печати/экспорте (см. @media print).
+   Бумага всегда белая в светлой теме; в тёмной — инверсия (см. .preview-dark). */
+#resume-a4 {
+  width: 100%;
+  max-width: 794px;
+  background: #ffffff;
+  overflow-wrap: break-word;
+  word-break: break-word;
+}
+
+#resume-a4 > div {
+  min-height: 0;
+}
+
+/* Тёмный лист в live preview при тёмной теме сайта.
+   Фото переворачиваем обратно, чтобы выглядели нормально.
+   На экспорт это не влияет: html2canvas игнорирует filter + перед экспортом
+   класс preview-dark снимается (см. forceLight), при печати filter гасится ниже. */
+.dark .preview-dark #resume-a4 {
+  filter: invert(1) hue-rotate(180deg);
+}
+
+.dark .preview-dark #resume-a4 img {
+  filter: invert(1) hue-rotate(180deg);
+}
+
+/* Чтобы длинные ссылки не разрывали вёрстку PDF */
+#resume-a4 a {
+  word-break: break-all;
+}
+
+/* Тонкий скроллбар для панели */
+*::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+*::-webkit-scrollbar-thumb {
+  background: #d4d4d8;
+  border-radius: 8px;
+}
+.dark *::-webkit-scrollbar-thumb {
+  background: #52525b;
+}
+*::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* ---------- Печать: только резюме, чистый A4 без обрезки ---------- */
+@media print {
+  @page {
+    size: A4;
+    margin: 0;
+  }
+  html,
+  body {
+    background: #ffffff !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+  .no-print {
+    display: none !important;
+  }
+  .print-container {
+    display: block !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    background: #ffffff !important;
+  }
+  #resume-a4 {
+    box-shadow: none !important;
+    border-radius: 0 !important;
+    margin: 0 !important;
+    max-width: none !important;
+    width: 210mm !important;
+    min-height: 297mm !important;
+    filter: none !important;
+  }
+  #resume-a4 > div {
+    min-height: 297mm !important;
+  }
+  #resume-a4 img {
+    filter: none !important;
+  }
+}
