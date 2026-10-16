@@ -151,7 +151,7 @@ html.theme-anim .step-traveler {
   word-break: break-word;
 }
 
-#resume-a4 > div {
+#resume-a4 > div:first-child {
   min-height: 0;
 }
 
@@ -218,7 +218,7 @@ html.theme-anim .step-traveler {
     min-height: 297mm !important;
     filter: none !important;
   }
-  #resume-a4 > div {
+  #resume-a4 > div:first-child {
     min-height: 297mm !important;
   }
   #resume-a4 img {

@@ -100,6 +100,7 @@ export interface Strings {
   projEmptyText: string;
   projectN: string;
   delete: string;
+  watermark: string;
   fTitle: string;
   fTitlePh: string;
   fStack: string;
@@ -223,6 +224,7 @@ const RU: Strings = {
     "Добавьте курсовые, дипломные или личные проекты — для выпускника без опыта это главный блок резюме.",
   projectN: "Проект",
   delete: "Удалить",
+  watermark: "Сгенерировано с помощью сайта «ResumeBuilder».",
   fTitle: "Название проекта *",
   fTitlePh: "Например: Сайт колледжа / TaskFlow / Бот расписания",
   fStack: "Использованный стек",
@@ -364,6 +366,7 @@ const KK: Strings = {
     "Курстық, дипломдық немесе жеке жобаларды қосыңыз — тәжірибесіз түлек үшін бұл түйіндеменің басты бөлімі.",
   projectN: "Жоба",
   delete: "Жою",
+  watermark: "«ResumeBuilder» сайты арқылы жасалды.",
   fTitle: "Жоба атауы *",
   fTitlePh: "Мысалы: Колледж сайты / TaskFlow / Сабақ кестесі боты",
   fStack: "Қолданылған стек",

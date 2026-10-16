@@ -13,10 +13,12 @@ export default function ResumePreview({
   data,
   r,
   darkPreview,
+  watermark,
 }: {
   data: ResumeData;
   r: ResumeStrings;
   darkPreview: boolean;
+  watermark: string;
 }) {
   return (
     <div className={["print-container w-full", darkPreview ? "preview-dark" : ""].join(" ")}>
@@ -30,6 +32,13 @@ export default function ResumePreview({
         {data.template === "simple" && <SimpleTemplate data={data} r={r} />}
         {data.template === "gradient" && <GradientTemplate data={data} r={r} />}
         {data.template === "elegant" && <ElegantTemplate data={data} r={r} />}
+        {/* Неудаляемая подпись: попадает и в preview, и в печатный PDF */}
+        <div
+          className="bg-white px-6 pb-5 pt-3 text-center font-sans"
+          style={{ color: "#a8a8b0", fontSize: "10px", letterSpacing: "0.02em" }}
+        >
+          {watermark}
+        </div>
       </div>
     </div>
   );

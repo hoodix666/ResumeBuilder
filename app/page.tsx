@@ -408,7 +408,7 @@ export default function Home() {
                 {t.liveBadge}
               </span>
             </div>
-            <ResumePreview data={data} r={t.r} darkPreview={theme === "dark" && !forceLight} />
+            <ResumePreview data={data} r={t.r} darkPreview={theme === "dark" && !forceLight} watermark={t.watermark} />
             <p className="no-print mt-3 text-center text-xs text-zinc-500 dark:text-zinc-400">
               {t.scaleNote}
             </p>
